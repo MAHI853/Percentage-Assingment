@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            text-align: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            height: 305vh;
+        }
+
+        .box {
+            width: 59vw;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 100px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .cpn {
+                grid-column: span 1;
+            }
+        }
+
+        .btn-grad {background-image: linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%)}
+         .btn-grad {
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;            
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+            display: block;
+            width: 100%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+          }
+
+          .btn-grad:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+          }
+
+          .bx{
+            margin-bottom: 200px;
+          }
+
+          hr{
+            border: 2px solid black;
+            width: 59vw;
+          }
+          p{
+            padding-top: 30px;
+          }
+
+    
+
+    </style>
+</head>
+
+<body>
+    
+
+    <div class="container">
+        <div class="box">
+            <h1>Percentage & Grade Calculator</h1>
+            <input type="number" id="totalMarks" placeholder="Enter Total Marks">
+            <input type="number" id="obMarks" placeholder="Enter Obtained Marks">
+            <button id="calc1" class="btn-grad" onclick="perGrade()">Calculate</button>
+        </div>
+
+        <div id="resultTab1" class="box bx">
+            <h3>Calculation Results:</h3>
+            <p id="resultText1">Results will be displayed here.</p>
+        </div>
+
+        <hr>
+
+        <div class="box">
+            <h1>CGP Calculator</h1>
+            <input type="number" id="totalQp" placeholder="Enter Total of QP">
+            <input type="number" id="totalCr" placeholder="Enter Total Credit Hours">
+            <button id="calc2" class="btn-grad" onclick="cgpCal()">Calculate</button>
+        </div>
+
+        <div id="resultTab2" class="box bx">
+            <h3>Calculation Results:</h3>
+            <p id="resultText2">Results will be displayed here.</p>
+        </div>
+
+        <hr>
+
+        <div class="box cpn">
+            <h1>CPN Calculator</h1>
+            <input type="number" id="sscPer" placeholder="Enter SSC Percentage">
+            <input type="number" id="hscPer" placeholder="Enter HSC Percentage">
+            <input type="number" id="testScore" placeholder="Enter Entry-Test Score">
+            <button id="calc3" class="btn-grad" onclick="cpnCalc()">Calculate</button>
+        </div>
+
+        <div id="resultTab3" class="box bx">
+            <h3>Calculation Results:</h3>
+            <p id="resultText3">Results will be displayed here.</p>
+        </div>
+    </div>
+
+
+    <script>
+        function perGrade() {
+            var totalMarks = document.getElementById("totalMarks").value;
+            var obMarks = document.getElementById("obMarks").value;
+
+            if(!totalMarks || isNaN(totalMarks) || !obMarks || isNaN(obMarks)){
+                document.getElementById("resultText1").innerHTML = "Please Enter Valid Marks."
+                return;
+            }
+
+            if(totalMarks <= 0 || obMarks <=0){
+                document.getElementById("resultText1").innerHTML = "Marks Must Greater Than 0."
+                return;
+            }
+
+            
+            var percentage = (obMarks / totalMarks) * 100;
+            var grade = "";
+            
+            if(totalMarks > 100 || obMarks > 100){
+                document.getElementById("resultText1").innerHTML = "Your Percentage is:  " + percentage;
+                return; 
+            }
+
+            switch(true) {
+                case percentage >= 90:
+                    grade = "A+";
+                    break;
+                case percentage >= 80:
+                    grade = "A";
+                    break;
+                case percentage >= 70:
+                    grade = "B";
+                    break;
+                case percentage >= 60:
+                    grade = "C";
+                    break;
+                case percentage >= 50:
+                    grade = "D";
+                    break;
+                default:
+                    grade = "F";
+
+            }
+            document.getElementById("resultText1").innerHTML = "Your Percentage is: " + percentage.toFixed(2) + "% and Grade is: " + grade;
+        }
+
+        function cgpCal(){
+            var totalQp = document.getElementById("totalQp").value;
+            var totalCr = document.getElementById("totalCr").value;
+
+            if(!totalQp || isNaN(totalQp) || !totalCr || isNaN(totalCr)){
+                document.getElementById("resultText2").innerHTML = "Please Enter Valid Values"
+                return;
+            }
+
+            if(totalQp <= 0 || totalCr <= 0){
+                document.getElementById("resultText2").innerHTML = "Value Must Be Greater Than 0"
+                return;
+            }
+
+            var cgp = totalQp / totalCr;
+            document.getElementById("resultText2").innerHTML = "Your CGPA is: " + cgp ;
+        }
+
+        function cpnCalc(){
+            var sscPer = document.getElementById("sscPer").value;
+            var hscPer = document.getElementById("hscPer").value;
+            var testScore = document.getElementById("testScore").value;
+
+            if(!sscPer || isNaN(sscPer) || !hscPer || isNaN(hscPer) || !testScore || isNaN(testScore)){
+                document.getElementById("resultText3").innerHTML = "Please Enter Valid Percentage"
+                return;
+            }
+
+            if(sscPer < 0 || sscPer > 100 || hscPer < 0 || hscPer > 100 || testScore < 0 || testScore > 100){
+                document.getElementById("resultText3").innerHTML = "Percentage Must Be Between 0-100"
+                return
+            }
+            var cpn = (sscPer*0.10)+(hscPer*0.30)+(testScore*0.60)
+            document.getElementById("resultText3").innerHTML = "Your CPN is: " + cpn ;
+            
+        }
+    </script>
+</body>
+</html>
